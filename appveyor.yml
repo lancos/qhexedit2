@@ -1,0 +1,26 @@
+version: build{build}
+
+branches: appveyor
+
+environment:
+  matrix:
+  - example: qhexedit
+    name: win32
+    platform: mingw
+    qt: mingw492_32
+    
+clone_folder: c:\dev\qhexedit
+clone_depth: 5
+
+init:
+  - set PATH=C:\Qt\5.5\%qt%\bin;C:\Qt\Tools\mingw492_32\bin;%PATH%
+  
+before_build:
+  - cd c:\dev\qhexedit
+  - md build
+  - cd build
+  
+build_script:
+  - qmake ..\example\qhexedit.pro
+  - mingw32-make
+ 
