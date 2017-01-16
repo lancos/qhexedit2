@@ -21,9 +21,9 @@ before_build:
 build_script:
   - qmake ..\example\qhexedit.pro
   - mingw32-make
+  - dir
  
 artifacts:
-  - dir
   - path: '*.exe'
   - path: '*.dll'
 
