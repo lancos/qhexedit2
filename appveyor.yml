@@ -23,6 +23,7 @@ build_script:
   - mingw32-make
  
 artifacts:
+  - dir
   - path: '*.exe'
   - path: '*.dll'
 
