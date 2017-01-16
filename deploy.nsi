@@ -96,17 +96,22 @@
 Section ""
   SetOutPath $INSTDIR
   File ${BUILD_DIR}qhexedit.exe
+  File ${BUILD_DIR}*.dll
+  File ${BUILD_DIR}\iconengines\*
+  File ${BUILD_DIR}\imageformats\*
+  File ${BUILD_DIR}\platforms\*
+  File ${BUILD_DIR}\translations\* 
   File ${TRANS_DIR}*.qm
-  File ${QT}libwinpthread-1.dll
-  File ${QT}icudt54.dll
-  File ${QT}icuin54.dll
-  File ${QT}icuuc54.dll
-  File ${QT}libEGL.dll
-  File ${QT}libgcc_s_dw2-1.dll
-  File ${QT}libstdc++-6.dll
-  File ${QT}Qt5Core.dll
-  File ${QT}Qt5Gui.dll
-  File ${QT}QT5Widgets.dll
+#  File ${QT}libwinpthread-1.dll
+#  File ${QT}icudt54.dll
+#  File ${QT}icuin54.dll
+#  File ${QT}icuuc54.dll
+#  File ${QT}libEGL.dll
+#  File ${QT}libgcc_s_dw2-1.dll
+#  File ${QT}libstdc++-6.dll
+#  File ${QT}Qt5Core.dll
+#  File ${QT}Qt5Gui.dll
+#  File ${QT}QT5Widgets.dll
   WriteUninstaller $INSTDIR\uninstall.exe
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${INSTALLATIONNAME}" "DisplayName" "QHexEdit Installer"
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${INSTALLATIONNAME}" "UninstallString" '"$INSTDIR\uninstall.exe"'
