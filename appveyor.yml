@@ -22,3 +22,7 @@ build_script:
   - qmake ..\example\qhexedit.pro
   - mingw32-make
  
+artifacts:
+  - path c:\dev\qhexedit\build
+    name: qhexedit.exe
+
