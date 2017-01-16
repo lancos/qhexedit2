@@ -1,7 +1,8 @@
 ﻿#!define VERSION "0.0.1"
-!define QT "D:\Programme\Qt\Qt5.3.2\5.3\mingw482_32\bin\"
-!define BUILD_DIR "..\build\qhexedit\release\"
-!define OUTFILE_NAME "..\build\QHexEdit.exe"
+!define QT "C:\Qt\5.5\mingw492_32\bin\"
+!define BUILD_DIR "C:\dev\build\release\"
+!define TRANS_DIR "C:\dev\qhexedit\example\translations\"
+!define OUTFILE_NAME "C:\dev\build\QHexEdit.exe"
 !define INSTALLATIONNAME "QHexEdit"
 
 ;--------------------------------
@@ -95,11 +96,11 @@
 Section ""
   SetOutPath $INSTDIR
   File ${BUILD_DIR}qhexedit.exe
-  File example\translations\*.qm
+  File ${TRANS_DIR}*.qm
   File ${QT}libwinpthread-1.dll
-  File ${QT}icudt52.dll
-  File ${QT}icuin52.dll
-  File ${QT}icuuc52.dll
+  File ${QT}icudt54.dll
+  File ${QT}icuin54.dll
+  File ${QT}icuuc54.dll
   File ${QT}libstdc++-6.dll
   File ${QT}Qt5Core.dll
   File ${QT}Qt5Gui.dll
