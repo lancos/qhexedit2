@@ -25,5 +25,5 @@ build_script:
   - dir
  
 artifacts:
-  - path: qhexedit.exe
+  - path: c:\dev\qhexedit\build\release\qhexedit.exe
 
