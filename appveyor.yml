@@ -11,7 +11,7 @@ clone_folder: c:\dev\qhexedit
 clone_depth: 5
 
 init:
-  - set PATH=C:\Qt\5.5\%qt%\bin;C:\Qt\Tools\mingw492_32\bin;%PATH%
+  - set PATH=C:\Qt\5.5\%qt%\bin;C:\Qt\Tools\mingw492_32\bin;"C:\Program Files (x86)\NSIS";%PATH%
   
 before_build:
   - cd c:\dev
@@ -21,9 +21,11 @@ before_build:
 build_script:
   - qmake ..\qhexedit\example\qhexedit.pro
   - mingw32-make
+  - makensis C:\dev\qhexedit\deploy.nsi
+  
   - dir release
-  - dir C:\Qt\5.5\%qt%\bin
+  - dir 
  
 artifacts:
-  - path: release\qhexedit.exe
+  - path: QHexEdit.exe
 
