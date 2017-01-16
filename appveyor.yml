@@ -14,16 +14,17 @@ init:
   - set PATH=C:\Qt\5.5\%qt%\bin;C:\Qt\Tools\mingw492_32\bin;%PATH%
   
 before_build:
-  - cd c:\dev\qhexedit
+  - cd c:\dev
   - md build
   - cd build
   
 build_script:
-  - qmake ..\example\qhexedit.pro
+  - qmake ..\qhexedit\example\qhexedit.pro
   - mingw32-make
   - cd release
-  - dir
+  - dir c:\dev\build\release
+  - dir C:\Qt\5.5\%qt%\bin
  
 artifacts:
-  - path: c:\dev\qhexedit\build\release\qhexedit.exe
+  - path: c:\dev\build\release\qhexedit.exe
 
