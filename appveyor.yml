@@ -21,10 +21,9 @@ before_build:
 build_script:
   - qmake ..\qhexedit\example\qhexedit.pro
   - mingw32-make
-  - cd release
-  - dir c:\dev\build\release
+  - dir release
   - dir C:\Qt\5.5\%qt%\bin
  
 artifacts:
-  - path: c:\dev\build\release\qhexedit.exe
+  - path: release\qhexedit.exe
 
