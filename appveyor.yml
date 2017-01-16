@@ -27,3 +27,14 @@ build_script:
 artifacts:
   - path: build\QHexEdit.exe
 
+deploy:
+  description: 'Latest QHexEdit Release'
+  provider: GitHub
+  auth_token:
+    secure: swhHkduATse1LV+aYaUVZ5qA6L0ZYbiKnh/xrsINEHP2zP49yelpMRkYIuYg3wDI
+  artifact: build\QHexEdit.exe
+  draft: false
+  prerelease: false
+  on:
+    branch: master                 # release from master branch only
+    appveyor_repo_tag: true        # deploy on tag push only
