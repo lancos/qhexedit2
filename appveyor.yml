@@ -24,7 +24,8 @@ build_script:
   - makensis ..\deploy.nsi
   
   - dir release
-  - dir 
+  - dir
+  - dir C:\Qt\5.5\%qt%\bin
  
 artifacts:
   - path: build\QHexEdit.exe
