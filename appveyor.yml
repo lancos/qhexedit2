@@ -1,7 +1,5 @@
 version: build{build}
 
-branches: appveyor
-
 environment:
   matrix:
   - example: qhexedit
