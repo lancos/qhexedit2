@@ -101,6 +101,7 @@ Section ""
   File ${QT}icudt54.dll
   File ${QT}icuin54.dll
   File ${QT}icuuc54.dll
+  File ${QT}libEGL.dll
   File ${QT}libgcc_s_dw2-1.dll
   File ${QT}libstdc++-6.dll
   File ${QT}Qt5Core.dll
