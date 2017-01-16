@@ -23,11 +23,6 @@ build_script:
   - mingw32-make
   - windeployqt.exe release\qhexedit.exe
   - makensis ..\deploy.nsi
-  
-  - dir release
-  - dir release\platforms
-  - dir
-  - dir C:\Qt\5.5\%qt%\bin
  
 artifacts:
   - path: build\QHexEdit.exe
