@@ -25,6 +25,7 @@ build_script:
   - makensis ..\deploy.nsi
   
   - dir release
+  - dir release\platforms
   - dir
   - dir C:\Qt\5.5\%qt%\bin
  
