@@ -151,10 +151,7 @@ LangString DESC_Desktop ${LANG_GERMAN} "Einen Eintrag zum Desktop hinzufügen"
 Section "Uninstall"
   DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\${INSTALLATIONNAME}"
   DeleteRegKey SHCTX "Software\${INSTALLATIONNAME}"
-  Delete $INSTDIR\*.exe
-  Delete $INSTDIR\*.qm
-  Delete $INSTDIR\*.dll
-  RMDir $INSTDIR
+  RMDir /r $INSTDIR
   Delete "$SMPROGRAMS\${INSTALLATIONNAME}\Uninstall.lnk"
   Delete "$SMPROGRAMS\${INSTALLATIONNAME}\QHexEdit.lnk"
   Delete "$DESKTOP\QHexEdit.lnk"
