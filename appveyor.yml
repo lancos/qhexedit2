@@ -22,7 +22,8 @@ build_script:
   - qmake ..\example\qhexedit.pro
   - mingw32-make
   - cd release
+  - dir
  
 artifacts:
-  - path: '*.exe'
+  - path: qhexedit.exe
 
