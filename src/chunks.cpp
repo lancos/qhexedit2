@@ -1,5 +1,9 @@
 #include "chunks.h"
+#if defined(WIN32) || defined(__MINGW32__) || defined(Q_OS_WIN32)
+#include <climits.h>
+#else
 #include <limits.h>
+#endif
 
 #define NORMAL 0
 #define HIGHLIGHTED 1
