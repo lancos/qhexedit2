@@ -26,14 +26,16 @@ FORMS += \
     searchdialog.ui
 
 OTHER_FILES += \
-    ../readme.md \
     ../doc/release.txt \
     ../doc/howtorelease.txt \
+    ../appveyor.yml \
     ../build-example.bat \
     ../build-python-bindings.bat \
     ../build-example.sh \
     ../build-python-bindings.sh \
-    ../deploy.nsi
+    ../deploy.nsi \
+    ../readme.md \
+    ../setup.py
 
 TRANSLATIONS += \
     translations/qhexedit_cs.ts \
