@@ -970,7 +970,6 @@ void QHexEdit::paintEvent(QPaintEvent *event)
 
 	// due to scrolling the cursor can go out of the currently displayed data
 	if ((hexPositionInShowData >= 0) && (hexPositionInShowData < _hexDataShown.size()))
-#if 1
 	{
 		// paint cursor
 		if (!_readOnly)
@@ -1010,35 +1009,6 @@ void QHexEdit::paintEvent(QPaintEvent *event)
 				painter.drawText(_pxCursorX - pxOfsX, _pxCursorY, _hexCaps ? hex.toUpper() : hex);
 			}
         }
-#else
-    {
-            // paint cursor
-            if (_readOnly)
-            {
-                // make the background stick out
-                QColor color = viewport()->palette().dark().color();
-                painter.fillRect(QRect(_pxCursorX - pxOfsX, _pxCursorY - _pxCharHeight + _pxSelectionSub, _pxCharWidth, _pxCharHeight), color);
-            }
-            else
-            {
-                if (_blink && hasFocus())
-                    painter.fillRect(_cursorRect, this->palette().color(QPalette::WindowText));
-            }
-
-            if (_editAreaIsAscii)
-            {
-                // every 2 hex there is 1 ascii
-                int asciiPositionInShowData = hexPositionInShowData / 2;
-                int ch = (uchar)_dataShown.at(asciiPositionInShowData);
-                if (ch < ' ' || ch > '~')
-                    ch = '.';
-                painter.drawText(_pxCursorX - pxOfsX, _pxCursorY, QChar(ch));
-            }
-            else
-            {
-                painter.drawText(_pxCursorX - pxOfsX, _pxCursorY, _hexDataShown.mid(hexPositionInShowData, 1));
-            }
-#endif
     }
 
     // emit event, if size has changed
