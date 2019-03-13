@@ -993,7 +993,7 @@ void QHexEdit::paintEvent(QPaintEvent *event)
 		{
 			painter.fillRect(QRect(_pxCursorX - pxOfsX, _pxCursorY - _pxCharHeight + _pxSelectionSub, _pxCharWidth, _pxCharHeight), viewport()->palette().dark().color());
 			if (_editAreaIsAscii)
-            {
+			{
 				// every 2 hex there is 1 ascii
 				int asciiPositionInShowData = hexPositionInShowData / 2;
 
@@ -1003,13 +1003,13 @@ void QHexEdit::paintEvent(QPaintEvent *event)
 
 				painter.drawText(_pxCursorX - pxOfsX, _pxCursorY, QChar(ch));
 			}
-            else
-            {
+			else
+			{
 				QByteArray hex = _hexDataShown.mid(hexPositionInShowData, 1);
 				painter.drawText(_pxCursorX - pxOfsX, _pxCursorY, _hexCaps ? hex.toUpper() : hex);
 			}
-        }
-    }
+		}
+	}
 
     // emit event, if size has changed
     if (_lastEventSize != _chunks->size())
