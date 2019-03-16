@@ -19,7 +19,7 @@
 /** \mainpage
 QHexEdit is a binary editor widget for Qt.
 
-\version Version 0.8.5
+\version Version 0.8.6
 \image html qhexedit.png
 */
 
@@ -263,6 +263,10 @@ public:
     */
     QString selectionToReadableString();
 
+    /*! Return the selected content of QHexEdit as QByteArray
+    */
+    QString selectedData();
+
     /*! Set Font of QHexEdit
      * \param font
      */
@@ -374,8 +378,8 @@ private:
     void resetSelection(qint64 pos);            // set selectionStart and selectionEnd to pos
     void resetSelection();                      // set selectionEnd to selectionStart
     void setSelection(qint64 pos);              // set min (if below init) or max (if greater init)
-    int getSelectionBegin();
-    int getSelectionEnd();
+    qint64 getSelectionBegin();
+    qint64 getSelectionEnd();
 
     // Private utility functions
     void init();

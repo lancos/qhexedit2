@@ -162,7 +162,7 @@ int QHexEdit::addressWidth()
     if (size > Q_INT64_C(0x100000000)){ n += 8; size /= Q_INT64_C(0x100000000);}
     if (size > 0x10000){ n += 4; size /= 0x10000;}
     if (size > 0x100){ n += 2; size /= 0x100;}
-    if (size > 0x10){ n += 1; size /= 0x10;}
+    if (size > 0x10){ n += 1;}
 
     if (n > _addressWidth)
         return n;
@@ -469,6 +469,12 @@ QString QHexEdit::selectionToReadableString()
 {
     QByteArray ba = _chunks->data(getSelectionBegin(), getSelectionEnd() - getSelectionBegin());
     return toReadable(ba);
+}
+
+QString QHexEdit::selectedData()
+{
+    QByteArray ba = _chunks->data(getSelectionBegin(), getSelectionEnd() - getSelectionBegin()).toHex();
+    return ba;
 }
 
 void QHexEdit::setFont(const QFont &font)
@@ -1024,7 +1030,7 @@ void QHexEdit::paintEvent(QPaintEvent *event)
                 // every 2 hex there is 1 ascii
                 int asciiPositionInShowData = hexPositionInShowData / 2;
                 int ch = (uchar)_dataShown.at(asciiPositionInShowData);
-                if ( ch < 0x20 )
+                if (ch < ' ' || ch > '~')
                     ch = '.';
                 painter.drawText(_pxCursorX - pxOfsX, _pxCursorY, QChar(ch));
             }
@@ -1119,12 +1125,12 @@ void QHexEdit::setSelection(qint64 pos)
     }
 }
 
-int QHexEdit::getSelectionBegin()
+qint64 QHexEdit::getSelectionBegin()
 {
     return _bSelectionBegin;
 }
 
-int QHexEdit::getSelectionEnd()
+qint64 QHexEdit::getSelectionEnd()
 {
     return _bSelectionEnd;
 }
