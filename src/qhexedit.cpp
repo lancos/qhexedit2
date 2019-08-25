@@ -954,7 +954,7 @@ void QHexEdit::paintEvent(QPaintEvent *event)
 					if (ch < ' ' || ch > '~')
                         ch = '.';
                     r.setRect(pxPosAsciiX2, pxPosY - _pxCharHeight + _pxSelectionSub, _pxCharWidth, _pxCharHeight);
-                    painter.fillRect(r, _asciiAreaColor);
+                    painter.fillRect(r, (c == _brushSelection.color() || c == _brushHighlighted.color()) ? c : _asciiAreaColor);
                     painter.setPen(QPen(_asciiFontColor));
                     painter.drawText(pxPosAsciiX2, pxPosY, QChar(ch));
                     pxPosAsciiX2 += _pxCharWidth;
