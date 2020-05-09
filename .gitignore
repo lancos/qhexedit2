@@ -217,4 +217,5 @@ pip-log.txt
 
 # QtCreator
 *.pro.user
-/build-qhexedit-Desktop-Debug/
+/build-qhexedit-*/
+.directory
