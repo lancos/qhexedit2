@@ -19,7 +19,7 @@
 /** \mainpage
 QHexEdit is a binary editor widget for Qt.
 
-\version Version 0.8.8
+\version Version 0.8.9
 \image html qhexedit.png
 */
 
@@ -70,25 +70,25 @@ class QHEXEDIT_API QHexEdit : public QAbstractScrollArea
     */
     Q_PROPERTY(QColor addressAreaColor READ addressAreaColor WRITE setAddressAreaColor)
 
-	/*! Property address font color sets (setAddressFontColor()) the text
+    /*! Property address font color sets (setAddressFontColor()) the text
     color of address areas. You can also read the color (addressFontColor()).
     */
     Q_PROPERTY(QColor addressFontColor READ addressFontColor WRITE setAddressFontColor)
-    
-	/*! Property ascii area color sets (setAsciiAreaColor()) the backgorund
+
+    /*! Property ascii area color sets (setAsciiAreaColor()) the backgorund
     color of ascii areas. You can also read the color (asciiAreaColor()).
     */
     Q_PROPERTY(QColor asciiAreaColor READ asciiAreaColor WRITE setAsciiAreaColor)
-    
-	/*! Property ascii font color sets (setAsciiFontColor()) the text
+
+    /*! Property ascii font color sets (setAsciiFontColor()) the text
     color of ascii areas. You can also read the color (asciiFontColor()).
     */
     Q_PROPERTY(QColor asciiFontColor READ asciiFontColor WRITE setAsciiFontColor)
 
-	/*! Property hex font color sets (setHexFontColor()) the text
-	color of hex areas. You can also read the color (hexFontColor()).
-	*/
-	Q_PROPERTY(QColor hexFontColor READ hexFontColor WRITE setHexFontColor)
+    /*! Property hex font color sets (setHexFontColor()) the text
+    color of hex areas. You can also read the color (hexFontColor()).
+    */
+    Q_PROPERTY(QColor hexFontColor READ hexFontColor WRITE setHexFontColor)
 
     /*! Property addressOffset is added to the Numbers of the Address Area.
     A offset in the address area (left side) is sometimes useful, whe you show
@@ -323,8 +323,8 @@ public:
     QColor asciiFontColor();
     void setAsciiFontColor(const QColor &color);
 
-	QColor hexFontColor();
-	void setHexFontColor(const QColor &color);
+    QColor hexFontColor();
+    void setHexFontColor(const QColor &color);
 
     qint64 addressOffset();
     void setAddressOffset(qint64 addressArea);
@@ -420,7 +420,7 @@ private:
     QColor _asciiAreaColor;
     QColor _addressFontColor;
     QColor _asciiFontColor;
-	QColor _hexFontColor;
+    QColor _hexFontColor;
     int _addressWidth;
     bool _asciiArea;
     qint64 _addressOffset;

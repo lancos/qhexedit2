@@ -10,6 +10,14 @@ import sipconfig
 
 cfg = sipconfig.Configuration()
 pyqt_sip_dir = cfg.default_sip_dir
+for p in (os.path.join(pyqt_sip_dir, "PyQt5"),
+          os.path.join(pyqt_sip_dir, "PyQt5-3"),
+          os.path.join(pyqt_sip_dir, "PyQt4"),
+          pyqt_sip_dir,
+          os.path.join(cfg.default_mod_dir, "PyQt5", "bindings")):
+    if os.path.exists(os.path.join(p, "QtCore", "QtCoremod.sip")):
+        pyqt_sip_dir = p
+        break
 
 try:
     import PyQt5
@@ -114,7 +122,7 @@ dirname = os.path.dirname(__file__)
 
 setup(
     name='QHexEdit',
-    version='0.8.8',
+    version='0.8.9',
     ext_modules=[
         Extension(
             "qhexedit",

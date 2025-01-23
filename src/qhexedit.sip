@@ -1,4 +1,4 @@
-%Module(name=qhexedit, version=1)
+%Module(name=qhexedit)
 
 %Import QtCore/QtCoremod.sip
 %Import QtGui/QtGuimod.sip
@@ -44,6 +44,18 @@ public:
 
     QColor addressAreaColor();
     void setAddressAreaColor(const QColor &);
+
+    QColor addressFontColor();
+    void setAddressFontColor(const QColor &);
+
+    QColor asciiAreaColor();
+    void setAsciiAreaColor(const QColor &);
+
+    QColor asciiFontColor();
+    void setAsciiFontColor(const QColor &);
+
+    QColor hexFontColor();
+    void setHexFontColor(const QColor &);
 
     qint64 addressOffset();
     void setAddressOffset(qint64);
