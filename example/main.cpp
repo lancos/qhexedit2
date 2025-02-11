@@ -1,9 +1,10 @@
+#include <optional>
 #include <QApplication>
-#include <QIcon>
 #include <QCommandLineParser>
-#include <QTranslator>
-#include <QLocale>
 #include <QFile>
+#include <QIcon>
+#include <QLocale>
+#include <QTranslator>
 
 #include "mainwindow.h"
 
@@ -87,11 +88,11 @@ int main(int argc, char *argv[])
 
         case Status::VersionRequested:
             parser.showVersion();
-            Q_UNREACHABLE_RETURN(0);
+            return 0;
 
         case Status::HelpRequested:
             parser.showHelp();
-            Q_UNREACHABLE_RETURN(0);
+            return 0;
     }
 
     if (query.hasFile)
