@@ -1,3 +1,21 @@
+/*
+* QHexEdit is a Hex Editor Widget for the Qt Framework
+* Copyright (C) 2010-2025 Winfried Simon
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Lesser General Public
+* License as published by the Free Software Foundation; either
+* version 2.1 of the License, or (at your option) any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with this library; if not, see
+* https://www.gnu.org/licenses/
+*/
 #include "chunks.h"
 #include <limits.h>
 
@@ -160,9 +178,14 @@ void Chunks::setDataChanged(qint64 pos, bool dataChanged)
 
 bool Chunks::dataChanged(qint64 pos)
 {
-    QByteArray highlighted;
-    data(pos, 1, &highlighted);
-    return bool(highlighted.at(0));
+    foreach (Chunk chunk, _chunks)
+    {
+        if (pos >= chunk.absPos && pos < (chunk.absPos + chunk.dataChanged.size()))
+        {
+            return bool(chunk.dataChanged.at(pos - chunk.absPos));
+        }
+    }
+    return false;
 }
 
 

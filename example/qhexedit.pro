@@ -1,22 +1,25 @@
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += widgets
+CONFIG += c++17
 
 HEADERS = \
     mainwindow.h \
     optionsdialog.h \
+    searchdialog.h \
     ../src/qhexedit.h \
     ../src/chunks.h \
     ../src/commands.h \
-    searchdialog.h
+    ../src/color_manager.h
 
 
 SOURCES = \
     main.cpp \
     mainwindow.cpp \
     optionsdialog.cpp \
+    searchdialog.cpp \
     ../src/qhexedit.cpp \
     ../src/chunks.cpp \
     ../src/commands.cpp \
-    searchdialog.cpp
+    ../src/color_manager.cpp \
 
 RESOURCES = \
     qhexedit.qrc
@@ -25,21 +28,12 @@ FORMS += \
     optionsdialog.ui \
     searchdialog.ui
 
-OTHER_FILES += \
-    ../build-example.bat \
-    ../build-python-bindings.bat \
-    ../build-example.sh \
-    ../build-python-bindings.sh \
-    ../deploy.nsi \
-    ../doc/release.txt \
-    ../doc/howtorelease.txt \
-    ../appveyor.yml \
-    ../readme.md \
-    ../setup.py \
-    ../src/qhexedit.sip
-
 TRANSLATIONS += \
     translations/qhexedit_cs.ts \
-    translations/qhexedit_de.ts
-
+    translations/qhexedit_de.ts \
+    translations/qhexedit_es.ts \
+    translations/qhexedit_fr.ts \
+    translations/qhexedit_it.ts \
+    translations/qhexedit_ru.ts
+    
 DEFINES += QHEXEDIT_EXPORTS

@@ -1,23 +1,23 @@
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-QT += core gui
+QT += core gui widgets
 TEMPLATE = lib
 
-VERSION = 4.2.0
+VERSION = 0.9.0
 
 DEFINES += QHEXEDIT_EXPORTS
 
 HEADERS = \
     qhexedit.h \
     chunks.h \
-    commands.h
+    commands.h \
+    color_manager.h
 
 
 SOURCES = \
     qhexedit.cpp \
     chunks.cpp \
-    commands.cpp
+    commands.cpp \
+    color_manager.cpp
 
 Release:TARGET = qhexedit
 Debug:TARGET = qhexeditd

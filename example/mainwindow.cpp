@@ -1,3 +1,21 @@
+/*
+* QHexEdit is a Hex Editor Widget for the Qt Framework
+* Copyright (C) 2010-2025 Winfried Simon
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Lesser General Public
+* License as published by the Free Software Foundation; either
+* version 2.1 of the License, or (at your option) any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with this library; if not, see
+* https://www.gnu.org/licenses/
+*/
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QApplication>
@@ -10,6 +28,7 @@
 #include <QFontDialog>
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QStyleFactory>
 
 #include "mainwindow.h"
 
@@ -26,9 +45,32 @@ MainWindow::MainWindow()
 /*****************************************************************************/
 /* Protected methods */
 /*****************************************************************************/
-void MainWindow::closeEvent(QCloseEvent *)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
     writeSettings();
+
+    if (isModified)
+    {
+        QMessageBox msgBox;
+        msgBox.setText(tr("The file has been modified."));
+        msgBox.setInformativeText(tr("Do you want to save your changes?"));
+        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Save);
+        switch (msgBox.exec()) {
+            case QMessageBox::Save:
+                save();
+                event->accept();
+                break;
+            case QMessageBox::Discard:
+                event->accept();
+                break;
+            default:
+                event->ignore();
+                break;
+        }
+    } else {
+        event->accept();
+    }
 }
 
 
@@ -61,7 +103,8 @@ void MainWindow::about()
 
 void MainWindow::dataChanged()
 {
-    setWindowModified(hexEdit->isModified());
+    isModified = true;
+    setWindowModified(isModified);
 }
 
 void MainWindow::open()
@@ -74,8 +117,8 @@ void MainWindow::open()
 
 void MainWindow::optionsAccepted()
 {
+    optionsDialog->save(hexEdit);
     writeSettings();
-    readSettings();
 }
 
 void MainWindow::findNext()
@@ -168,6 +211,7 @@ void MainWindow::setSize(qint64 size)
 
 void MainWindow::showOptionsDialog()
 {
+    optionsDialog->load(hexEdit);
     optionsDialog->show();
 }
 
@@ -181,15 +225,19 @@ void MainWindow::showSearchDialog()
 /*****************************************************************************/
 void MainWindow::init()
 {
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
+    hexEdit = new QHexEdit(this);
+    setCentralWidget(hexEdit);
+    readSettings();
+    writeSettings(); // Write settings during first run
+
     setAttribute(Qt::WA_DeleteOnClose);
+    isUntitled = true;
+    isModified = false;
+
     optionsDialog = new OptionsDialog(this);
     connect(optionsDialog, SIGNAL(accepted()), this, SLOT(optionsAccepted()));
-    isUntitled = true;
 
-    hexEdit = new QHexEdit;
-    setCentralWidget(hexEdit);
-    connect(hexEdit, SIGNAL(overwriteModeChanged(bool)), this, SLOT(setOverwriteMode(bool)));
-    connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(dataChanged()));
     searchDialog = new SearchDialog(hexEdit, this);
 
     createActions();
@@ -197,9 +245,10 @@ void MainWindow::init()
     createToolBars();
     createStatusBar();
 
-    readSettings();
-
     setUnifiedTitleAndToolBarOnMac(true);
+
+    connect(hexEdit, SIGNAL(overwriteModeChanged(bool)), this, SLOT(setOverwriteMode(bool)));
+    connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(dataChanged()));
 }
 
 void MainWindow::createActions()
@@ -359,24 +408,30 @@ void MainWindow::readSettings()
     move(pos);
     resize(size);
 
-    hexEdit->setAddressArea(settings.value("AddressArea").toBool());
-    hexEdit->setAsciiArea(settings.value("AsciiArea").toBool());
-    hexEdit->setHighlighting(settings.value("Highlighting").toBool());
-    hexEdit->setOverwriteMode(settings.value("OverwriteMode").toBool());
-    hexEdit->setReadOnly(settings.value("ReadOnly").toBool());
+    // Note: theme settings is not stored in hexedit, Optionsdialog handles this directly
 
-    hexEdit->setHighlightingColor(settings.value("HighlightingColor").value<QColor>());
-    hexEdit->setAddressAreaColor(settings.value("AddressAreaColor").value<QColor>());
-    hexEdit->setSelectionColor(settings.value("SelectionColor").value<QColor>());
-    hexEdit->setFont(settings.value("WidgetFont").value<QFont>());
-    hexEdit->setAddressFontColor(settings.value("AddressFontColor").value<QColor>());
-    hexEdit->setAsciiAreaColor(settings.value("AsciiAreaColor").value<QColor>());
-    hexEdit->setAsciiFontColor(settings.value("AsciiFontColor").value<QColor>());
-    hexEdit->setHexFontColor(settings.value("HexFontColor").value<QColor>());
-
-    hexEdit->setAddressWidth(settings.value("AddressAreaWidth").toInt());
-    hexEdit->setBytesPerLine(settings.value("BytesPerLine").toInt());
-    hexEdit->setHexCaps(settings.value("HexCaps", true).toBool());
+    if (settings.contains("AddressArea"))
+        hexEdit->setAddressArea(settings.value("AddressArea").toBool());
+    if (settings.contains("AsciiArea"))
+        hexEdit->setAsciiArea(settings.value("AsciiArea").toBool());
+    if (settings.contains("Highlighting"))
+        hexEdit->setHighlighting(settings.value("Highlighting").toBool());
+    if (settings.contains("OverwriteMode"))
+        hexEdit->setOverwriteMode(settings.value("OverwriteMode").toBool());
+    if (settings.contains("ReadOnly"))
+        hexEdit->setReadOnly(settings.value("ReadOnly").toBool());
+    if (settings.contains("DynamicBytesPerLine"))
+        hexEdit->setDynamicBytesPerLine(settings.value("DynamicBytesPerLine").toBool());
+    if (settings.contains("HighlightingColor"))
+        hexEdit->setHighlightingColor(settings.value("HighlightingColor").value<QColor>());
+    if (settings.contains("AddressAreaWidth"))
+        hexEdit->setAddressWidth(settings.value("AddressAreaWidth").toInt());
+    if (settings.contains("BytesPerLine"))
+        hexEdit->setBytesPerLine(settings.value("BytesPerLine").toInt());
+    if (settings.contains("HexCaps"))
+        hexEdit->setHexCaps(settings.value("HexCaps").toBool());
+    if (settings.contains("WidgetFont"))
+        hexEdit->setFont(settings.value("WidgetFont").value<QFont>());
 }
 
 bool MainWindow::saveFile(const QString &fileName)
@@ -392,8 +447,11 @@ bool MainWindow::saveFile(const QString &fileName)
     {
         file.setFileName(tmpFileName);
         ok = file.copy(fileName);
-        if (ok)
+        if (ok) {
             ok = QFile::remove(tmpFileName);
+            isModified = false;
+            setWindowModified(false);
+        }
     }
     QApplication::restoreOverrideCursor();
 
@@ -427,7 +485,24 @@ QString MainWindow::strippedName(const QString &fullFileName)
 
 void MainWindow::writeSettings()
 {
+    // Note: theme settings is not stored in hexedit, Optionsdialog handles this directly
+
     QSettings settings;
     settings.setValue("pos", pos());
     settings.setValue("size", size());
+
+    settings.setValue("AddressArea", hexEdit->addressArea());
+    settings.setValue("AsciiArea", hexEdit->asciiArea());
+    settings.setValue("Highlighting", hexEdit->highlighting());
+    settings.setValue("OverwriteMode", hexEdit->overwriteMode());
+    settings.setValue("ReadOnly", hexEdit->isReadOnly());
+    settings.setValue("DynamicBytesPerLine", hexEdit->dynamicBytesPerLine());
+
+    settings.setValue("HighlightingColor", hexEdit->highlightingColor());
+
+    settings.setValue("AddressAreaWidth", hexEdit->addressWidth());
+    settings.setValue("BytesPerLine", hexEdit->bytesPerLine());
+    settings.setValue("HexCaps", hexEdit->hexCaps());
+
+    settings.setValue("WidgetFont", hexEdit->font());
 }
